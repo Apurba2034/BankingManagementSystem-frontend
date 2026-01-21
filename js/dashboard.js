@@ -129,7 +129,8 @@ async function loadTransactions() {
 
   data.forEach(tx => {
     const li = document.createElement("li");
-    li.textContent = `${tx.transaction_type} - ₹${tx.amount} - ${tx.timestamp}`;
+    li.textContent = `${tx.type} ₹${tx.amount} | From: ${tx.fromAccount ?? "-"} → To: ${tx.toAccount ?? "-"} | ${tx.date} ${tx.time}`;
+
 
     list.appendChild(li);
   });
