@@ -77,7 +77,11 @@ async function deposit() {
   }
 }
 
+let isTransferring = false;
+
 async function transfer() {
+  if (isTransferring) return; // block multiple clicks
+  isTransferring = true;
   const toInput = document.getElementById("toAccount");
   const amountInput = document.getElementById("transferAmount");
 
