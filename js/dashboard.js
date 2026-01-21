@@ -138,7 +138,7 @@ data.forEach(tx => {
 
   list.appendChild(li);
 });
-
+}
 
 function logout() {
   localStorage.clear();
