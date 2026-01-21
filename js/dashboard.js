@@ -127,14 +127,18 @@ async function loadTransactions() {
   const list = document.getElementById("transactions");
   list.innerHTML = "";
 
-  data.forEach(tx => {
-    const li = document.createElement("li");
-    li.textContent = `${tx.type} ₹${tx.amount} | From: ${tx.fromAccount ?? "-"} → To: ${tx.toAccount ?? "-"} | ${tx.date} ${tx.time}`;
+data.forEach(tx => {
+  const li = document.createElement("li");
 
+  if (tx.type === "CREDIT") {
+    li.textContent = `CREDIT ₹${tx.amount} | From: ${tx.fromAccount ?? "Bank"} → To: ${tx.toAccount} | ${tx.date} ${tx.time}`;
+  } else {
+    li.textContent = `DEBIT ₹${tx.amount} | From: ${tx.fromAccount} → To: ${tx.toAccount} | ${tx.date} ${tx.time}`;
+  }
 
-    list.appendChild(li);
-  });
-}
+  list.appendChild(li);
+});
+
 
 function logout() {
   localStorage.clear();
