@@ -80,8 +80,9 @@ async function deposit() {
 let isTransferring = false;
 
 async function transfer() {
-  if (isTransferring) return; // block multiple clicks
+  if (isTransferring) return;
   isTransferring = true;
+
   const toInput = document.getElementById("toAccount");
   const amountInput = document.getElementById("transferAmount");
 
@@ -90,6 +91,8 @@ async function transfer() {
 
   if (!toAccountNumber || !amount) {
     showMessage("Enter valid values", "error");
+    clearTransferInputs();
+    isTransferring = false;
     return;
   }
 
@@ -107,13 +110,16 @@ async function transfer() {
     if (!res.ok) throw new Error();
 
     showMessage("Transfer successful!");
-    toInput.value = "";
-    amountInput.value = "";
+    clearTransferInputs();
     loadAccount();
   } catch {
     showMessage("Transfer failed", "error");
+    clearTransferInputs(); // 👈 clears on error
   }
+
+  isTransferring = false;
 }
+
 async function loadTransactions() {
   const response = await fetch(`https://bankingmanagementsystem-rest-api-backend-production.up.railway.app/api/transactions/account/${accountNumber}`);
   const data = await response.json();
@@ -133,3 +139,8 @@ function logout() {
   localStorage.clear();
   window.location.href = "login.html";
 }
+function clearTransferInputs() {
+  document.getElementById("toAccount").value = "";
+  document.getElementById("transferAmount").value = "";
+}
+
