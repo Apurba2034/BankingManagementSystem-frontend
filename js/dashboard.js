@@ -121,24 +121,37 @@ async function transfer() {
 }
 
 async function loadTransactions() {
-  const response = await fetch(`https://bankingmanagementsystem-rest-api-backend-production.up.railway.app/api/transactions/account/${accountNumber}`);
-  const data = await response.json();
+  try {
+    const response = await fetch(`https://bankingmanagementsystem-rest-api-backend-production.up.railway.app/api/transactions/account/${accountNumber}`);
+    if (!response.ok) throw new Error("Failed to load");
 
-  const list = document.getElementById("transactions");
-  list.innerHTML = "";
+    const data = await response.json();
 
-data.forEach(tx => {
-  const li = document.createElement("li");
+    const list = document.getElementById("transactions");
+    list.innerHTML = "";
 
-  if (tx.type === "CREDIT") {
-    li.textContent = `CREDIT ₹${tx.amount} | From: ${tx.fromAccount ?? "Bank"} → To: ${tx.toAccount} | ${tx.date} ${tx.time}`;
-  } else {
-    li.textContent = `DEBIT ₹${tx.amount} | From: ${tx.fromAccount} → To: ${tx.toAccount} | ${tx.date} ${tx.time}`;
+    if (data.length === 0) {
+      list.innerHTML = "<li>No transactions found</li>";
+      return;
+    }
+
+    data.forEach(tx => {
+      const li = document.createElement("li");
+
+      if (tx.type === "CREDIT") {
+        li.textContent = `CREDIT ₹${tx.amount} | From: ${tx.fromAccount ?? "Bank"} → To: ${tx.toAccount} | ${tx.date} ${tx.time}`;
+      } else {
+        li.textContent = `DEBIT ₹${tx.amount} | From: ${tx.fromAccount} → To: ${tx.toAccount} | ${tx.date} ${tx.time}`;
+      }
+
+      list.appendChild(li);
+    });
+
+  } catch (err) {
+    showMessage("Failed to load transactions", "error");
   }
-
-  list.appendChild(li);
-});
 }
+
 
 function logout() {
   localStorage.clear();
