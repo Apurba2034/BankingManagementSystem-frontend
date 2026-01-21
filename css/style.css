@@ -1,0 +1,93 @@
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #eef3f9;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 900px;
+  margin: 30px auto;
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+}
+
+h2, h3 {
+  color: #1e3a8a;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+
+input {
+  padding: 10px;
+  width: 240px;
+  border: 1px solid #cbd5e1;
+  border-radius: 4px;
+  margin: 5px 0;
+}
+
+button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 4px;
+  background: #2563eb;
+  color: white;
+  cursor: pointer;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+button:hover {
+  background: #1d4ed8;
+}
+
+.card {
+  background: #f8fafc;
+  padding: 15px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+  border: 1px solid #e2e8f0;
+}
+
+.message {
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+  display: none;
+  margin-top: 10px;
+  font-weight: bold;
+}
+
+.success {
+  background: #ecfeff;
+  color: green;
+  border: 1px solid #bae6fd;
+}
+
+.error {
+  background: #fef2f2;
+  color: red;
+  border: 1px solid #fecaca;
+}
+
+.flex-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.logout-btn {
+  float: right;
+  background: #dc2626;
+}
+
+.logout-btn:hover {
+  background: #b91c1c;
+}

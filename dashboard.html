@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="container">
+
+    <button class="logout-btn" onclick="logout()">Logout</button>
+    <h2>Dashboard</h2>
+
+    <div id="messageBox" class="message"></div>
+
+    <div id="userInfo" class="card"></div>
+
+    <h3>Account Info</h3>
+    <div id="accountInfo" class="card"></div>
+
+    <button id="createAccountBtn" onclick="createAccount()" style="display:none;">
+      Create Account
+    </button>
+
+    <hr>
+
+    <h3>Deposit Money</h3>
+    <div class="flex-row">
+      <input type="number" id="depositAmount" placeholder="Amount">
+      <button type="button" onclick="deposit()">Deposit</button>
+    </div>
+
+    <hr>
+
+    <h3>Transfer Money</h3>
+    <div class="flex-row">
+      <input type="number" id="toAccount" placeholder="To Account Number">
+      <input type="number" id="transferAmount" placeholder="Amount">
+      <button type="button" onclick="transfer()">Transfer</button>
+    </div>
+
+    <hr>
+
+    <h3>Transaction History</h3>
+    <button onclick="loadTransactions()">Load Transactions</button>
+    <ul id="transactions"></ul>
+
+  </div>
+
+  <script src="js/dashboard.js"></script>
+</body>
+</html>
