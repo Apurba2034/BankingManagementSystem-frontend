@@ -1,3 +1,14 @@
+function setLoading(btn, text = "Processing...") {
+  btn.disabled = true;
+  btn.dataset.oldText = btn.innerText;
+  btn.innerText = text;
+}
+
+function removeLoading(btn) {
+  btn.disabled = false;
+  btn.innerText = btn.dataset.oldText;
+}
+
 function showMessage(text, type = "success") {
   const box = document.getElementById("messageBox");
   box.className = `message ${type}`;
@@ -53,6 +64,7 @@ async function createAccount() {
 
 async function deposit() {
   const input = document.getElementById("depositAmount");
+  const btn = event.target;
   const amount = Number(input.value);
 
   if (!amount || amount <= 0) {
@@ -61,6 +73,9 @@ async function deposit() {
   }
 
   try {
+    setLoading(btn, "Depositing...");
+    showMessage("Please wait...");
+
     const res = await fetch("https://bankingmanagementsystem-rest-api-backend-production.up.railway.app/api/accounts/deposit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -74,6 +89,8 @@ async function deposit() {
     loadAccount();
   } catch {
     showMessage("Deposit failed", "error");
+  } finally {
+    removeLoading(btn);
   }
 }
 
@@ -83,6 +100,7 @@ async function transfer() {
   if (isTransferring) return;
   isTransferring = true;
 
+  const btn = event.target;
   const toInput = document.getElementById("toAccount");
   const amountInput = document.getElementById("transferAmount");
 
@@ -97,6 +115,9 @@ async function transfer() {
   }
 
   try {
+    setLoading(btn, "Transferring...");
+    showMessage("Please wait...");
+
     const res = await fetch("https://bankingmanagementsystem-rest-api-backend-production.up.railway.app/api/accounts/transfer", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -114,14 +135,20 @@ async function transfer() {
     loadAccount();
   } catch {
     showMessage("Transfer failed", "error");
-    clearTransferInputs(); // 👈 clears on error
+    clearTransferInputs();
+  } finally {
+    removeLoading(btn);
+    isTransferring = false;
   }
-
-  isTransferring = false;
 }
 
 async function loadTransactions() {
+  const btn = event.target;
+
   try {
+    setLoading(btn, "Loading...");
+    showMessage("Fetching transactions...");
+
     const response = await fetch(`https://bankingmanagementsystem-rest-api-backend-production.up.railway.app/api/transactions/account/${accountNumber}`);
     if (!response.ok) throw new Error("Failed to load");
 
@@ -149,8 +176,11 @@ async function loadTransactions() {
 
   } catch (err) {
     showMessage("Failed to load transactions", "error");
+  } finally {
+    removeLoading(btn);
   }
 }
+
 
 
 function logout() {
